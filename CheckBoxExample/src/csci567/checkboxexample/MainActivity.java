@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch(view.getId()) {
 	    	case R.id.checkBox1:
+	    		//Fall through into checkBox2
 	    	case R.id.checkBox2:
 	    		onCheckboxClicked(view);
 	    		break;
