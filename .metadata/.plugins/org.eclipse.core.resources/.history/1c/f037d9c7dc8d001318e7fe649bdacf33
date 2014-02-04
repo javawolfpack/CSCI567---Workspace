@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">ButtonExample</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">I dare you to press my button.</string>
-    <string name="button">button</string>
-
-</resources>

@@ -27,6 +27,4 @@ Thumbs.db
 *.vrb
 *.pdf
 
-/.metadata/.log
-
-/.metadata/.plugins/org.eclipse.cdt.core/.log
+/.metadata
