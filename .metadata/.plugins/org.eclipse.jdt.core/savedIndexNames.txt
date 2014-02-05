@@ -1,7 +1,0 @@
-INDEX VERSION 1.126+/Users/bryandixon/Repos/workspace/.metadata/.plugins/org.eclipse.jdt.core
-3321028238.index
-3927879410.index
-322288224.index
-3554889817.index
-3188357934.index
-1622240037.index
