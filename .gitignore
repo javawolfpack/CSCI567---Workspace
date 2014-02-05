@@ -27,5 +27,9 @@ Thumbs.db
 *.vrb
 *.pdf
 
+#ignore .metadata folder
 /.metadata
 /.metadata/
+
+#ignore .classpath
+.classpath
