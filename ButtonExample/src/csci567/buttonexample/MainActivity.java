@@ -34,6 +34,7 @@ public class MainActivity extends Activity implements OnClickListener {
         		TextView txt = (TextView) findViewById(R.id.textView1);
             	//Replace the text in the textView with the following text.      
             	txt.setText("Button Pressed " + count + " times.");
+            	break;
 		}		
 	}
 
