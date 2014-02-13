@@ -97,7 +97,7 @@ public class MainActivity extends Activity implements OnClickListener {
             	//Replace the text in the textView with the following text.      
             	txt2.setText(readFile());
 	        	break;
-	}	
+		}	
 		
 	}
 
