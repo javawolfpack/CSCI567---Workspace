@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WriteFile</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world"></string>
+    <string name="hint">Type a string</string>
+    <string name="button">Write File</string>
+    <string name="button2">Read File</string>
+
+</resources>
