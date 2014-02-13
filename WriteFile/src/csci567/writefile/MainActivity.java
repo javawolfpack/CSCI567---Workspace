@@ -26,8 +26,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Button buttontest = (Button) findViewById(R.id.button1);
-		buttontest.setOnClickListener(this);
+		Button buttonwrite = (Button) findViewById(R.id.button1);
+		buttonwrite.setOnClickListener(this);
+		Button buttonread = (Button) findViewById(R.id.button2);
+		buttonread.setOnClickListener(this);
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private boolean writeFile(String string){
 		try {
 			File file = new File(Environment.getExternalStorageDirectory().getPath() +"/test.txt");
- 
+			Log.d("FileWrite: ",Environment.getExternalStorageDirectory().getPath() +"/test.txt");
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
@@ -54,29 +56,31 @@ public class MainActivity extends Activity implements OnClickListener {
 			Log.d("FileWrite: ","Done");
  
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.d("FileWriteError: ", e.toString());
 		}
 		return false;
 	}
 	
 	private String readFile(){
+		Log.d("FileRead: ","Starting");
 		String toReturn = "";
 		try {
 			File file = new File(Environment.getExternalStorageDirectory().getPath() +"/test.txt");
  
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
+				Log.d("FileRead: ","No File");
 				return "";
 			}
  
 			FileReader fr = new FileReader(file.getAbsoluteFile());
-			BufferedReader br = new BufferedReader(fr);
+			BufferedReader br = new BufferedReader(fr); 
 			toReturn = br.readLine();
 			br.close();
 			Log.d("FileRead: ","Done");
  
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.d("FileReadError: ", e.toString());
 		}
 		return toReturn;
 	}
