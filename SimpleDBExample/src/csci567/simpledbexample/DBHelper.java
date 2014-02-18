@@ -31,12 +31,13 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	public boolean insertText(String text){
 		try{
-			DBHelper appDB = new DBHelper(context);
-			SQLiteDatabase qdb = appDB.getWritableDatabase();
+			//DBHelper appDB = new DBHelper(context);
+			SQLiteDatabase qdb = this.getWritableDatabase();
 			Log.d("DB Insert: ", "INSERT OR REPLACE INTO " +
 	    			EXAMPLE_TABLE + " (text) Values ("+ text + ");");
 			qdb.execSQL("INSERT OR REPLACE INTO " +
-	    			EXAMPLE_TABLE + " (text) Values (\""+ text + "\");"); 
+	    			EXAMPLE_TABLE + " (text) Values (\""+ text + "\");");
+			qdb.close();
 		}
 		catch(SQLiteException se){
 			Log.d("DB Insert Error: ",se.toString());
@@ -47,8 +48,8 @@ public class DBHelper extends SQLiteOpenHelper{
 	public String getText(){
 		String toReturn = "";
 		try{
-			DBHelper appDB = new DBHelper(context);
-			SQLiteDatabase qdb = appDB.getWritableDatabase();
+			//DBHelper appDB = new DBHelper(context);
+			SQLiteDatabase qdb = this.getReadableDatabase();
 			qdb.execSQL("CREATE TABLE IF NOT EXISTS " + EXAMPLE_TABLE + " (text VARCHAR);");
 			Cursor c = qdb.rawQuery("SELECT * FROM " +
 	    			EXAMPLE_TABLE, null);
@@ -61,6 +62,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	    			while (c.moveToNext());
 	    		}
 			}
+			qdb.close(); 
 		}
 		catch(SQLiteException se){
 			Log.d("DB Select Error: ",se.toString());
