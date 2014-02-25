@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		protected void onPostExecute(Void donothing) {
 			//parse JSON data
-			/*String text = "";
+			String text = "";
 	        try {
 	        	JSONObject jO = new JSONObject(result);
 	            JSONArray jArray = new JSONArray(jO.getString("suggestions"));    
@@ -146,7 +146,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	        } catch (JSONException e) {
 	            Log.e("JSONException", "Error: " + e.toString());
 	        }			
-			txt.setText(text);*/
+			txt.setText(text);
 			
 			//set TextView Contents to be JSON response
 			txt.setText(result);
@@ -188,6 +188,8 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		protected void onPostExecute(Void donothing) {
 			edittxt.setText("");
+			//Call get data to refresh suggestions list
+			new getData().execute();
 			//getBaseContext easier way to provide context then storing it
 			Toast.makeText(getBaseContext(), "Submission Submitted", Toast.LENGTH_LONG).show();
 		}		
