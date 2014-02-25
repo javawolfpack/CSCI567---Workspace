@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SuggestionApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">No Suggestions</string>
+	<string name="hint">Suggest a Topic</string>
+    <string name="button">Submit Suggestion</string>
+</resources>

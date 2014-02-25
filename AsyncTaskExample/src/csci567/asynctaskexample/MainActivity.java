@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 /**
  * @author Prabu
- * AsyncTask exmple
+ * AsyncTask example
  *
  */
 public class MainActivity extends Activity {
@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
 		time = (EditText) findViewById(R.id.et_time);
 		button = (Button) findViewById(R.id.btn_do_it);
 		finalResult = (TextView) findViewById(R.id.tv_result);
+		//In-line OnClick Listener
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
 	/**
 	 * @author Prabu
 	 * Private class which runs the long operation. ( Sleeping for some time )
+	 * AsyncTask<Params, Progress, Result>
 	 */
 	private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 
