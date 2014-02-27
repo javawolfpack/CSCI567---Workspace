@@ -6,4 +6,5 @@
     <string name="hello_world">No Suggestions</string>
 	<string name="hint">Suggest a Topic</string>
     <string name="button">Submit Suggestion</string>
+    <string name="csrf">Use CSRF Token</string>
 </resources>
