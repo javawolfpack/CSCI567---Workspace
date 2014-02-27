@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,27 +40,41 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener{
 	private EditText edittxt;
 	private TextView txt;
+	private ListView listView1;
 	private SharedPreferences prefs;
 	private boolean csrf;
+	String [] items = {"No Suggestions"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		edittxt = (EditText) findViewById(R.id.edittext);
-		txt = (TextView) findViewById(R.id.textView1);
+		//txt = (TextView) findViewById(R.id.textView1);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		csrf = prefs.getBoolean("csrf", false);
 		CheckBox csrfbox = (CheckBox) findViewById(R.id.csrftoken);
+		
+		
+		listView1 = (ListView) findViewById(R.id.listView1);		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items);
+		listView1.setAdapter(adapter);
+		
+		//base.OnCreate(bundle);
+		//items = new string[] { "Vegetables","Fruits","Flower Buds","Legumes","Bulbs","Tubers" };
+		//ListAdapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, items);
 		if(csrf){
 	        csrfbox.setChecked(true);
 	    }
@@ -116,6 +131,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		InputStream inputStream = null;
 	    String result = ""; 
 	    String url_select = "http://www.bryancdixon.com/androidjson";
+	    Vector<String> results = new Vector<String>();
 	
 
 		protected void onPreExecute() {
@@ -172,18 +188,27 @@ public class MainActivity extends Activity implements OnClickListener{
 	            
 	            for(int i=0; i < jArray.length(); i++) {
 	                JSONObject jObject = jArray.getJSONObject(i);
+	                results.add(jObject.getString("text"));
 	                text += jObject.getString("text")+"\n\n";
 	                Log.d("SuggestionAPP ",text);
 
 	            } // End Loop
 	            if(jArray.length()<=0){
+	            	results.add("No Suggestions");
 	            	text="No Suggestions";
 	            }
 	        } catch (JSONException e) {
 	            Log.e("JSONException", "Error: " + e.toString());
+	            results.add("No Suggestions");
 	            text="No Suggestions";
-	        }			
-			txt.setText(text);
+	        }
+	        //Generate String Array from Vector
+	        String [] s = results.toArray(new String[results.size()]);
+	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
+	                android.R.layout.simple_list_item_1, s);
+			listView1.setAdapter(adapter);
+	        //Method when using textview
+			//txt.setText(text);
 			
 			//set TextView Contents to be JSON response
 			//txt.setText(result);
