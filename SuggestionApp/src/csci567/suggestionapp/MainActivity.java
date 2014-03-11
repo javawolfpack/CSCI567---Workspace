@@ -37,6 +37,8 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -63,6 +65,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 	private boolean csrf;
 	ArrayAdapter<String> adapter;
 	String [] items = {"No Suggestions"};
+	String m_Text="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +113,42 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
 		if(item.getItemId()==R.id.action_search){
+			m_Text="";
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Search");
+
+			// Set up the input
+			final EditText input = new EditText(this);
+			// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+			builder.setView(input);
+
+			// Set up the buttons
+			builder.setPositiveButton("Search", new DialogInterface.OnClickListener() { 
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        m_Text = input.getText().toString();
+			        Vector<String> v = new Vector<String>();
+			        for(int i=0;i<adapter.getCount();i++){
+			        	if(adapter.getItem(i).contains(m_Text)){
+			        		v.add(adapter.getItem(i));
+			        	}
+			        }
+			        String [] s = v.toArray(new String[v.size()]);
+			        adapter = new ArrayAdapter<String>(getBaseContext(),
+			                android.R.layout.simple_list_item_1, s);
+					listView1.setAdapter(adapter);
+			        Log.d("SuggestionApp: ",adapter.toString());
+			        Toast.makeText(getBaseContext(), "Search for: "+m_Text, Toast.LENGTH_LONG).show();
+			    }
+			});
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        dialog.cancel();
+			    }
+			});
+			builder.show();
         	
-        	Toast.makeText(getBaseContext(), "Search", Toast.LENGTH_LONG).show();
             return true;
 		}
 	    if(item.getItemId()==R.id.action_refresh){
