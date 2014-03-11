@@ -22,12 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edittext"
         android:text="@string/button" />
-    <CheckBox
+    <!--  <CheckBox
         android:id="@+id/csrftoken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:layout_below="@+id/button1"
-        android:text="@string/csrf" />
+        android:text="@string/csrf" />-->
    <!--   <ScrollView 
          android:layout_width="wrap_content"
    		 android:layout_height="wrap_content" 
@@ -42,7 +42,7 @@
       	android:id="@+id/listView1"
       	android:layout_height="fill_parent"
       	android:layout_width="fill_parent"
-      	android:layout_below="@+id/csrftoken"/>
+      	android:layout_below="@+id/button1"/>
     
 
 </RelativeLayout>

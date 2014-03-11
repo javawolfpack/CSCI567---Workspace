@@ -31,29 +31,37 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.Activity;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
+//import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
+//import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends ActionBarActivity implements OnClickListener{
 	private EditText edittxt;
-	private TextView txt;
+	//private TextView txt;
 	private ListView listView1;
 	private SharedPreferences prefs;
 	private boolean csrf;
+	ArrayAdapter<String> adapter;
 	String [] items = {"No Suggestions"};
 
 	@Override
@@ -64,27 +72,28 @@ public class MainActivity extends Activity implements OnClickListener{
 		//txt = (TextView) findViewById(R.id.textView1);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		csrf = prefs.getBoolean("csrf", false);
-		CheckBox csrfbox = (CheckBox) findViewById(R.id.csrftoken);
+		//CheckBox csrfbox = (CheckBox) findViewById(R.id.csrftoken);
 		
 		
 		listView1 = (ListView) findViewById(R.id.listView1);		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, items);
 		listView1.setAdapter(adapter);
+		registerForContextMenu(listView1);
 		
 		//base.OnCreate(bundle);
 		//items = new string[] { "Vegetables","Fruits","Flower Buds","Legumes","Bulbs","Tubers" };
 		//ListAdapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, items);
-		if(csrf){
+		/*if(csrf){
 	        csrfbox.setChecked(true);
 	    }
 	    else{
 	    	csrfbox.setChecked(false);	    	
-	    }
+	    }*/
 		//Run getData class to populate TextView
 		new getData().execute();
 		
-		csrfbox.setOnClickListener(this);
+		//csrfbox.setOnClickListener(this);
 		Button buttonwrite = (Button) findViewById(R.id.button1);
 		buttonwrite.setOnClickListener(this);
 	}
@@ -92,17 +101,60 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		 MenuInflater inflater = getMenuInflater();		 
+		 inflater.inflate(R.menu.main, menu);
+		 return super.onCreateOptionsMenu(menu);
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+		if(item.getItemId()==R.id.action_search){
+        	
+        	Toast.makeText(getBaseContext(), "Search", Toast.LENGTH_LONG).show();
+            return true;
+		}
+	    if(item.getItemId()==R.id.action_refresh){
+	        	//Refresh Data
+	        	new getData().execute();
+	        	Toast.makeText(getBaseContext(), "Refreshing", Toast.LENGTH_LONG).show();
+	            return true;
+	    }
+	    if(item.getItemId()== R.id.action_settings){
+	        	Toast.makeText(getBaseContext(), "Settings", Toast.LENGTH_LONG).show();
+	            return true;
+	    }
+	    return super.onOptionsItemSelected(item);
+	    
+	}
+	
+	@Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	    int position = info.position;
+	    if(item.getItemId()==R.id.edit){
+	        	Toast.makeText(getBaseContext(), "Edit: " + adapter.getItem(position), Toast.LENGTH_LONG).show();
+	            return true;
+	    }
+	    if(item.getItemId()==R.id.delete){
+	        	Toast.makeText(getBaseContext(), "Delete: "+ adapter.getItem(position), Toast.LENGTH_LONG).show();
+	            return true;
+	    }
+	    return super.onContextItemSelected(item);
+	}
 	
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		switch (v.getId()) {
-	    	case R.id.button1:
+		if(v.getId() == R.id.button1){
 	    		EditText txt = (EditText) findViewById(R.id.edittext); 
 	    		if(csrf){
 	    	        Log.d("SuggestionAPP ", "CSRF TRUE");
@@ -113,8 +165,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	    	    	new postJSON().execute(txt.getText().toString());
 	    	    	
 	    	    }	    		
-	        	break;
-	    	case R.id.csrftoken:
+		}
+	    	/*case R.id.csrftoken:
 	    		boolean checked = ((CheckBox) v).isChecked();
 	    		if (checked){
 	            	prefs.edit().putBoolean("csrf", true).commit();
@@ -122,8 +174,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	            else{
 	            	prefs.edit().putBoolean("csrf", false).commit();
 	            }
-	            break;
-		}
+	            break;*/
+		
 		
 	}
 	
@@ -204,7 +256,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	        }
 	        //Generate String Array from Vector
 	        String [] s = results.toArray(new String[results.size()]);
-	        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
+	        adapter = new ArrayAdapter<String>(getBaseContext(),
 	                android.R.layout.simple_list_item_1, s);
 			listView1.setAdapter(adapter);
 	        //Method when using textview
