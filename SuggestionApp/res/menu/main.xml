@@ -3,7 +3,8 @@
           android:icon="@drawable/ic_action_search"
           android:showAsAction="always"
           android:title="@string/action_search"
-          SuggestionApp:showAsAction="ifRoom"/>
+          SuggestionApp:showAsAction="collapseActionView|ifRoom"
+          android:actionViewClass="android.widget.SearchView"/>
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="100"

@@ -57,6 +57,7 @@ import android.widget.ListView;
 //import android.widget.TextView;
 import android.widget.Toast;
 
+//<sdk>/extras/android/support/appcompat
 public class MainActivity extends ActionBarActivity implements OnClickListener{
 	private EditText edittxt;
 	//private TextView txt;
@@ -66,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener{
 	ArrayAdapter<String> adapter;
 	String [] items = {"No Suggestions"};
 	String m_Text="";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
